@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://btwfcd3ngbwd1"]
+
+[ext_resource type="Script" uid="uid://cgdeowq31466a" path="res://Scripts/world.gd" id="1_p70al"]
+[ext_resource type="Texture2D" uid="uid://gdgibpm5f0v8" path="res://Assets/Backgrounds/purple.png" id="2_45d1s"]
+[ext_resource type="PackedScene" uid="uid://bddhf4h0d1yci" path="res://Scenes/player.tscn" id="3_y7y61"]
+[ext_resource type="PackedScene" uid="uid://c5d58ejvtiwn1" path="res://Scenes/EnemySpawner.tscn" id="5_uo7di"]
+
+[node name="World" type="Node2D" unique_id=1745259192]
+script = ExtResource("1_p70al")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=47683505]
+texture_repeat = 2
+position = Vector2(-100, -29)
+texture = ExtResource("2_45d1s")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 768.204, 1024.232)
+
+[node name="Player" parent="." unique_id=879389103 instance=ExtResource("3_y7y61")]
+position = Vector2(252, 876)
+collision_layer = 2
+collision_mask = 21
+
+[node name="EnemySpawner" parent="." unique_id=159643178 instance=ExtResource("5_uo7di")]
+
+[node name="Score" type="RichTextLabel" parent="." unique_id=944746624]
+z_index = 1
+offset_left = 11.0
+offset_top = 11.0
+offset_right = 196.0
+offset_bottom = 52.0
+theme_override_font_sizes/normal_font_size = 29
+text = "SCORE: 0"
+horizontal_alignment = 1
+
+[node name="ColoredBG" type="ColorRect" parent="Score" unique_id=2030252567]
+z_index = -1
+layout_mode = 0
+offset_right = 185.0
+offset_bottom = 41.0
+color = Color(0, 0, 0, 0.32156864)
+
+[connection signal="spawn_laser" from="Player" to="." method="_on_player_spawn_laser"]
+[connection signal="add_score" from="EnemySpawner" to="." method="score_calc"]
