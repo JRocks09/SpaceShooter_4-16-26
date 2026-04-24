@@ -1,19 +1,26 @@
 [gd_scene format=3 uid="uid://bddhf4h0d1yci"]
 
 [ext_resource type="Script" uid="uid://dnpho5ytqxksd" path="res://Scripts/player.gd" id="1_cvnsp"]
-[ext_resource type="Texture2D" uid="uid://drg35x2remat2" path="res://Assets/Player/playerShip1_orange.png" id="1_v0iea"]
+[ext_resource type="Texture2D" uid="uid://dvt1ac174gxwx" path="res://Assets/Player/playerShip1_blue.png" id="2_6t5aa"]
+[ext_resource type="Script" uid="uid://bexf7ls0uj321" path="res://Scripts/player_sprite.gd" id="3_vgqql"]
 
-[node name="Player" type="Area2D" unique_id=879389103]
+[node name="Player" type="CharacterBody2D" unique_id=519703436]
+collision_mask = 2
 script = ExtResource("1_cvnsp")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1480588547]
 scale = Vector2(0.75, 0.75)
-texture = ExtResource("1_v0iea")
+texture = ExtResource("2_6t5aa")
+script = ExtResource("3_vgqql")
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="." unique_id=301494771]
-polygon = PackedVector2Array(-27, 2, -34, -5, -37, -4, -35, 18, -33, 18, -31, 15, -11, 20, -6, 28, 5, 28, 10, 21, 31, 16, 32, 18, 35, 18, 37, -4, 33, -5, 28, 1, 9, -9, 6, -28, -6, -28, -9, -9)
+polygon = PackedVector2Array(-27, 2, -34, -5, -37, -4, -35, 18, -32, 18, -31, 16, -11, 21, -6, 28, 5, 28, 10, 21, 31, 16, 32, 18, 35, 18, 37, -4, 33, -5, 28, 1, 9, -9, 6, -28, -6, -28, -9, -9)
 
 [node name="Muzzle" type="Marker2D" parent="." unique_id=1678796313]
 position = Vector2(0, -45)
 
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[node name="DamagedSpriteTimer" type="Timer" parent="." unique_id=635305420]
+wait_time = 0.2
+one_shot = true
+
+[connection signal="timeout" from="DamagedSpriteTimer" to="." method="_on_damaged_sprite_timer_timeout"]

@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://bhq1irsp5vmp3"]
+
+[ext_resource type="Script" uid="uid://dd7tv465ld5sx" path="res://Scripts/powerup_spawner.gd" id="1_v5nmg"]
+
+[node name="PowerupSpawner" type="Node2D" unique_id=159643178]
+script = ExtResource("1_v5nmg")
+
+[node name="P_SpawnPositions" type="Node2D" parent="." unique_id=1784586004]
+
+[node name="Pos1" type="Marker2D" parent="P_SpawnPositions" unique_id=1345880139]
+position = Vector2(90, 0)
+
+[node name="Pos2" type="Marker2D" parent="P_SpawnPositions" unique_id=1569373112]
+position = Vector2(180, 0)
+
+[node name="Pos3" type="Marker2D" parent="P_SpawnPositions" unique_id=399983608]
+position = Vector2(270, 0)
+
+[node name="Pos4" type="Marker2D" parent="P_SpawnPositions" unique_id=2067658738]
+position = Vector2(360, 0)
+
+[node name="Pos5" type="Marker2D" parent="P_SpawnPositions" unique_id=243788686]
+position = Vector2(450, 0)

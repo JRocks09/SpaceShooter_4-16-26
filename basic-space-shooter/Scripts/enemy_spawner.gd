@@ -3,6 +3,9 @@ extends Node2D
 signal add_score
 
 var spawn_positions = null
+var enemy_start_speed = 150
+var spawn_wait_time = 1.5
+var timer_maxed = false
 
 var Enemy = preload("res://Scenes/enemy.tscn")
 
@@ -23,3 +26,11 @@ func _on_spawn_timer_timeout():
 
 func enemy_spawned_death():
 	emit_signal("add_score")
+	if (spawn_wait_time >= 0.2):
+		spawn_wait_time -= 0.05
+		$SpawnTimer.wait_time = spawn_wait_time
+		print_debug("Enemy's spawn timer at length " + 
+		str(spawn_wait_time))
+	elif (!timer_maxed):
+		timer_maxed = true
+		print_debug("Enemy spawn timer length: MAXED OUT")

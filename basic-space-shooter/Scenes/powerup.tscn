@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://csurv0s50s1oc"]
+
+[ext_resource type="Script" uid="uid://bq08ojj44nx1v" path="res://Scripts/powerup.gd" id="1_dkaad"]
+[ext_resource type="Texture2D" uid="uid://k43r7ax23geg" path="res://Assets/Power-ups/star_gold.png" id="2_dkaad"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_f1g1t"]
+radius = 16.0
+
+[node name="Powerup" type="Area2D" unique_id=645636199 groups=["powerups"]]
+collision_layer = 32
+collision_mask = 3
+script = ExtResource("1_dkaad")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=814653997]
+texture = ExtResource("2_dkaad")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1704764433]
+position = Vector2(3.5527137e-15, 1.3333334)
+rotation = -1.5707964
+shape = SubResource("CircleShape2D_f1g1t")

@@ -14,6 +14,10 @@ config/name="BasicSpaceShooter"
 run/main_scene="uid://btwfcd3ngbwd1"
 config/features=PackedStringArray("4.6", "Forward Plus")
 
+[autoload]
+
+Global="*uid://kcj43gvutllv"
+
 [display]
 
 window/size/viewport_width=540
@@ -55,6 +59,7 @@ Shoot={
 2d_physics/layer_3="enemies"
 2d_physics/layer_4="player_laser"
 2d_physics/layer_5="enemy_laser"
+2d_physics/layer_6="powerup"
 
 [physics]
 

@@ -3,14 +3,62 @@
 [ext_resource type="Script" uid="uid://cgdeowq31466a" path="res://Scripts/world.gd" id="1_p70al"]
 [ext_resource type="Texture2D" uid="uid://gdgibpm5f0v8" path="res://Assets/Backgrounds/purple.png" id="2_45d1s"]
 [ext_resource type="PackedScene" uid="uid://bddhf4h0d1yci" path="res://Scenes/player.tscn" id="3_y7y61"]
+[ext_resource type="PackedScene" uid="uid://bhq1irsp5vmp3" path="res://Scenes/PowerupSpawner.tscn" id="5_p70al"]
 [ext_resource type="PackedScene" uid="uid://c5d58ejvtiwn1" path="res://Scenes/EnemySpawner.tscn" id="5_uo7di"]
+[ext_resource type="Texture2D" uid="uid://ctl73mhwg0fnl" path="res://Assets/Backgrounds/black.png" id="6_45d1s"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_45d1s"]
+size = Vector2(24, 960)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y7y61"]
+size = Vector2(592, 24)
 
 [node name="World" type="Node2D" unique_id=1745259192]
 script = ExtResource("1_p70al")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=47683505]
+[node name="Borders" type="Node2D" parent="." unique_id=779818446]
+
+[node name="LeftWall" type="StaticBody2D" parent="Borders" unique_id=573121715]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/LeftWall" unique_id=1005006070]
+position = Vector2(-12, 480)
+shape = SubResource("RectangleShape2D_45d1s")
+
+[node name="RightWall" type="StaticBody2D" parent="Borders" unique_id=873019413]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/RightWall" unique_id=542504392]
+position = Vector2(552, 480)
+shape = SubResource("RectangleShape2D_45d1s")
+
+[node name="TopWall" type="StaticBody2D" parent="Borders" unique_id=694690186]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/TopWall" unique_id=1688584550]
+position = Vector2(270, -12)
+shape = SubResource("RectangleShape2D_y7y61")
+
+[node name="BottomWall" type="StaticBody2D" parent="Borders" unique_id=1175229971]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/BottomWall" unique_id=739989358]
+position = Vector2(270, 972)
+shape = SubResource("RectangleShape2D_y7y61")
+
+[node name="EnemyDespawnPlane" type="Sprite2D" parent="." unique_id=1625733684]
+position = Vector2(263, 1100.0004)
+scale = Vector2(3.0000002, 0.24218726)
+texture = ExtResource("6_45d1s")
+
+[node name="LaserDespawnPlane" type="Sprite2D" parent="." unique_id=2054670936]
+position = Vector2(263, -130)
+scale = Vector2(3.0000002, 0.24218726)
+texture = ExtResource("6_45d1s")
+
+[node name="Background" type="Sprite2D" parent="." unique_id=47683505]
 texture_repeat = 2
-position = Vector2(-100, -29)
+position = Vector2(-121, -29)
 texture = ExtResource("2_45d1s")
 centered = false
 region_enabled = true
@@ -19,9 +67,18 @@ region_rect = Rect2(0, 0, 768.204, 1024.232)
 [node name="Player" parent="." unique_id=879389103 instance=ExtResource("3_y7y61")]
 position = Vector2(252, 876)
 collision_layer = 2
-collision_mask = 21
+collision_mask = 53
+
+[node name="Area2D" type="Area2D" parent="Player" unique_id=562170642]
+collision_layer = 2
+collision_mask = 53
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Player/Area2D" unique_id=599142260]
+polygon = PackedVector2Array(-27, 2, -34, -5, -37, -4, -35, 18, -32, 18, -31, 16, -11, 21, -6, 28, 5, 28, 10, 21, 31, 16, 32, 18, 35, 18, 37, -4, 33, -5, 28, 1, 9, -9, 6, -28, -6, -28, -9, -9)
 
 [node name="EnemySpawner" parent="." unique_id=159643178 instance=ExtResource("5_uo7di")]
+
+[node name="PowerupSpawner" parent="." unique_id=145895413 instance=ExtResource("5_p70al")]
 
 [node name="Score" type="RichTextLabel" parent="." unique_id=944746624]
 z_index = 1
@@ -40,5 +97,33 @@ offset_right = 185.0
 offset_bottom = 41.0
 color = Color(0, 0, 0, 0.32156864)
 
+[node name="PlayerHP" type="RichTextLabel" parent="." unique_id=707864404]
+z_index = 1
+offset_left = 427.0
+offset_top = 11.0
+offset_right = 529.0
+offset_bottom = 52.0
+theme_override_font_sizes/normal_font_size = 29
+text = "HP: #"
+horizontal_alignment = 1
+
+[node name="ColoredBG" type="ColorRect" parent="PlayerHP" unique_id=1219125273]
+z_index = -1
+layout_mode = 0
+offset_right = 185.0
+offset_bottom = 41.0
+color = Color(0, 0, 0, 0.32156864)
+
+[node name="P_SpawnTimer" type="Timer" parent="." unique_id=52250928]
+wait_time = 3.0
+one_shot = true
+
+[node name="LaserCooldownTimer" type="Timer" parent="." unique_id=48365041]
+one_shot = true
+
 [connection signal="spawn_laser" from="Player" to="." method="_on_player_spawn_laser"]
+[connection signal="area_entered" from="Player/Area2D" to="Player" method="_on_area_entered"]
 [connection signal="add_score" from="EnemySpawner" to="." method="score_calc"]
+[connection signal="health_text_increase" from="PowerupSpawner" to="." method="health_calc"]
+[connection signal="timeout" from="P_SpawnTimer" to="PowerupSpawner" method="_on_timer_timeout"]
+[connection signal="timeout" from="LaserCooldownTimer" to="Player" method="_on_cooldown_timer_timeout"]
